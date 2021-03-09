@@ -127,5 +127,8 @@
       }
     }
   },
-  "defaultProject": "ticketlog"
+  "defaultProject": "ticketlog",
+  "cli": {
+    "analytics": "389f1c21-c3ff-495d-8dd3-2fabad7f4244"
+  }
 }
