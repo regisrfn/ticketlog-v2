@@ -3,9 +3,14 @@
     min-height: 100vh;
     background-image: linear-gradient(to right bottom, $blue-accent-1, $blue-accent-4);
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: flex-start;
     padding: 2rem 1rem;
+
+    @media only screen and (max-width: $SMALL-DEV) {
+        flex-direction: column-reverse;
+        align-items: center;
+    }
 
     .dropdown {
         width: 30rem;
@@ -43,6 +48,11 @@
             &-item {
                 padding: 1rem;
                 font-size: 1.4rem;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: $grey-lighten-2;
+                }
             }
         }
 
@@ -56,6 +66,14 @@
             position: relative;
             overflow: hidden;
             height: 100vh;
+        }
+    }
+
+    .image-container {
+        width: 20rem;
+        > img {
+            width: 100%;
+            height: auto;
         }
     }
 }

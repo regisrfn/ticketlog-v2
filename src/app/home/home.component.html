@@ -1,13 +1,27 @@
-<div class="home">
-    <div class="dropdown">
-        <div class="dropdown__select" (click)="showItems()">
-            <span class="select">{{selectedValue}}</span>
-            <div class="icon" [inlineSVG]="'assets/svg/arrow-down.svg'" [ngClass]="{show:isShowingItems}"></div>
-        </div>
-        <div class="dropdown-hidden">
-            <div class="dropdown__list" [ngClass]="{show:isShowingItems}">
-                <div *ngFor="let estado of options; trackBy:trackByFn" class="dropdown__list-item">{{estado.nome}}</div>
+<div *ngIf="selectedEstado">
+    <div class="home">
+        <div class="dropdown">
+            <div class="dropdown__select" (click)="showItems()">
+                <span class="select">{{selectedValue}}</span>
+                <div class="icon" [inlineSVG]="'assets/svg/arrow-down.svg'" [ngClass]="{show:isShowingItems}"></div>
+            </div>
+            <div class="dropdown-hidden">
+                <div class="dropdown__list" [ngClass]="{show:isShowingItems}">
+                    <div *ngFor="let estado of options; trackBy:trackByFn" class="dropdown__list-item"
+                        (click)="selectEstado(estado.uf)">
+                        {{estado.nome}}
+                    </div>
+                </div>
             </div>
         </div>
+        <div class=image-container>
+            <img [src]="selectedEstado.urlImage">
+        </div>
     </div>
+</div>
+
+<div *ngIf="!selectedEstado && !loadingEstado" class="not_found">
+    <h1>
+        Pagina não encontrada
+    </h1>
 </div>
