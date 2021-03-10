@@ -11,10 +11,10 @@ describe('HeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientModule,RouterTestingModule],
-      declarations: [ HeaderComponent ]
+      imports: [HttpClientModule, RouterTestingModule],
+      declarations: [HeaderComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
@@ -26,4 +26,14 @@ describe('HeaderComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('a - handle scroll ', () => {
+    component.handleScroll()
+    expect(component.isActive).toEqual(false);
+    expect(fixture.debugElement.nativeElement.querySelector('.scrollClass')).not.toBeTruthy();
+    Object.defineProperty(window, 'scrollY', { value: 100 });
+    component.handleScroll()
+    expect(fixture.debugElement.nativeElement.querySelector('.scrollClass')).toBeTruthy();
+  });
+
 });
