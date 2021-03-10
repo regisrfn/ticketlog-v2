@@ -9,7 +9,6 @@
 
     .dropdown {
         width: 30rem;
-        position: relative;
 
         &__select {
             z-index: 1;
@@ -26,7 +25,7 @@
         &__list {
             z-index: 0;
             position: absolute;
-            top: -110%;
+            top: -11rem;
             left: 0;
             right: 0;
             border-radius: 4px;
@@ -37,8 +36,8 @@
             transition: all 0.3s;
             &.show {
                 opacity: 1;
-                visibility:visible;
-                top: 110%;
+                visibility: visible;
+                top: 0.5rem;
             }
 
             &-item {
@@ -51,6 +50,12 @@
             &.show {
                 transform: rotate(180deg);
             }
+        }
+
+        .dropdown-hidden {
+            position: relative;
+            overflow: hidden;
+            height: 100vh;
         }
     }
 }

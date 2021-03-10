@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Estado } from '../shared/estado.model';
 
 @Component({
   selector: 'app-home',
@@ -8,23 +9,30 @@ import { Component, OnInit } from '@angular/core';
 export class HomeComponent implements OnInit {
 
   isShowingItems = false
-  defaultEstadoUF = "SC"
+  estadoUF = "SC"
+  selectedValue = "Selecione o Estado"
 
-  options = [
+  options: Estado[] = [
     {
       nome: 'Rio Grande do Sul',
       uf: 'RS',
-      url: 'assets/svg/Bandeira_do_Rio_Grande_do_Sul.png',
+      urlImage: 'assets/svg/Bandeira_do_Rio_Grande_do_Sul.png',
+      custoEstadoUs: 0,
+      populacao: 0
     },
     {
       nome: 'Santa Catarina',
       uf: 'SC',
-      url: 'assets/svg/Bandeira_de_Santa_Catarina.svg',
+      urlImage: 'assets/svg/Bandeira_de_Santa_Catarina.svg',
+      custoEstadoUs: 0,
+      populacao: 0
     },
     {
       nome: 'Parana',
       uf: 'PR',
-      url: 'assets/svg/Bandeira_do_Paraná.svg',
+      urlImage: 'assets/svg/Bandeira_do_Paraná.svg',
+      custoEstadoUs: 0,
+      populacao: 0
     },
   ];
 
@@ -35,6 +43,10 @@ export class HomeComponent implements OnInit {
 
   showItems() {
     this.isShowingItems = !this.isShowingItems
+  }
+
+  trackByFn(index: any, item: Estado) {
+    return item.uf;
   }
 
 }
