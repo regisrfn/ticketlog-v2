@@ -1,0 +1,13 @@
+<div class="home">
+    <div class="dropdown">
+        <div class="dropdown__select" (click)="showItems()" >
+            <span class="select">Selected item</span>
+            <div class="icon" [inlineSVG] = "'assets/svg/arrow-down.svg'" [ngClass]="{show:isShowingItems}"></div>
+        </div>
+        <div class="dropdown__list" [ngClass]="{show:isShowingItems}">
+            <div class="dropdown__list-item">Test</div>
+            <div class="dropdown__list-item">Test</div>
+            <div class="dropdown__list-item">Test</div>
+        </div>
+    </div>
+</div>
