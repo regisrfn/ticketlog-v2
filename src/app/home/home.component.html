@@ -13,8 +13,10 @@
                 </div>
                 <div class="hide-overflow">
                     <div class="dropdown__list" [ngClass]="{show:isShowingItems}">
-                        <div *ngFor="let estado of options; trackBy:trackByFn" class="dropdown__list-item"
-                            (click)="selectEstado(estado.uf)">
+                        <div *ngFor="let estado of options;  trackBy:trackByFn"                         
+                            class="dropdown__list-item"
+                            (click)="selectEstado(estado.uf)"
+                            [ngClass]="{selected:estado.uf===selectedEstado.uf}">
                             {{estado.nome}}
                         </div>
                     </div>
