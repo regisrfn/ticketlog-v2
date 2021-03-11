@@ -1,13 +1,18 @@
+import { registerLocaleData } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import ptBr from '@angular/common/locales/pt';
+import { LOCALE_ID, NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-
+import { InlineSVGModule } from 'ng-inline-svg';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
-import { FormsModule } from '@angular/forms';
-import { InlineSVGModule } from 'ng-inline-svg';
-import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
+
+
+
+registerLocaleData(ptBr)
 
 @NgModule({
   declarations: [
@@ -22,7 +27,7 @@ import { HomeComponent } from './home/home.component';
     HttpClientModule,
     InlineSVGModule.forRoot()
   ],
-  providers: [],
+  providers: [{ provide: LOCALE_ID, useValue: 'pt-BR' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Dolar } from '../shared/dolar.model';
+import { DolarService } from '../shared/dolar.service';
 import { Estado } from '../shared/estado.model';
 import { EstadoService } from '../shared/estado.service';
 
@@ -15,6 +17,7 @@ export class HomeComponent implements OnInit {
   selectedValue: string | undefined = "Selecione o Estado"
   selectedEstado: Estado | undefined
   loadingEstado = false
+  dolar: Dolar | undefined
 
   options: Estado[] = [
     {
@@ -41,6 +44,7 @@ export class HomeComponent implements OnInit {
   ];
 
   ngOnInit(): void {
+    this.getDolar()
     this.selectEstado(this.estadoUF)
   }
 
@@ -59,10 +63,17 @@ export class HomeComponent implements OnInit {
       this.urlImage = newEstadoSelected.urlImage
       this.selectedValue = newEstadoSelected.nome
       this.setSelectedEstado(uf)
-    }else {
+    } else {
       this.loadingEstado = this.loadingEstado = false
     }
 
+  }
+
+  dolar2Real() {
+    if (this.selectedEstado && this.dolar?.USD) {
+      return this.selectedEstado.custoEstadoUs * (this.dolar.USD.ask || 1)
+    }
+    return 0
   }
 
   trackByFn(index: any, item: Estado) {
@@ -70,7 +81,8 @@ export class HomeComponent implements OnInit {
   }
 
   constructor(
-    private estadoService: EstadoService
+    private estadoService: EstadoService,
+    private dolarService: DolarService,
   ) { }
 
   private setSelectedEstado(uf: string) {
@@ -78,6 +90,8 @@ export class HomeComponent implements OnInit {
       .then(res => {
         this.selectedEstado = res as Estado
         this.selectedEstado.urlImage = this.urlImage
+        console.log(this.selectedEstado);
+        
       })
   }
 
@@ -87,6 +101,12 @@ export class HomeComponent implements OnInit {
     return this.options.filter(estado => estado.uf === uf)[0]
   }
 
-
+  private getDolar() {
+    this.dolarService.getDolar()
+      .then(res => {
+        this.dolar = res as Dolar
+      })
+      .catch(err => console.log(err))
+  }
 
 }

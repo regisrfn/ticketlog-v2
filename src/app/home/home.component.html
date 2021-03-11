@@ -1,24 +1,36 @@
 <div *ngIf="selectedEstado">
     <div class="home">
-        <div class="dropdown">
-            <div class="dropdown__select" (click)="showItems()">
-                <span class="select">{{selectedValue}}</span>
-                <div class="icon" [inlineSVG]="'assets/svg/arrow-down.svg'" [ngClass]="{show:isShowingItems}"></div>
-            </div>
-            <div class="dropdown-hidden">
-                <div class="dropdown__list" [ngClass]="{show:isShowingItems}">
-                    <div *ngFor="let estado of options; trackBy:trackByFn" class="dropdown__list-item"
-                        (click)="selectEstado(estado.uf)">
-                        {{estado.nome}}
+
+        <div class="home__content">
+            <h1>Estado: {{ selectedEstado.nome }}</h1>
+            <h2>População: {{ selectedEstado.populacao | number:'1.0':'pt-BR'}}</h2>
+            <h2>Custo: {{ dolar2Real() | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}</h2>
+
+
+            <div class="dropdown">
+                <div class="dropdown__select" (click)="showItems()">
+                    <span class="select">{{selectedValue}}</span>
+                    <div class="icon" [inlineSVG]="'assets/svg/arrow-down.svg'" [ngClass]="{show:isShowingItems}"></div>
+                </div>
+                <div class="hide-overflow">
+                    <div class="dropdown__list" [ngClass]="{show:isShowingItems}">
+                        <div *ngFor="let estado of options; trackBy:trackByFn" class="dropdown__list-item"
+                            (click)="selectEstado(estado.uf)">
+                            {{estado.nome}}
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
+
         <div class=image-container>
             <img [src]="selectedEstado.urlImage">
         </div>
+
     </div>
 </div>
+
 
 <div *ngIf="!selectedEstado && !loadingEstado" class="not_found">
     <h1>
