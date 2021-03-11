@@ -10,35 +10,58 @@
     @media only screen and (max-width: $SMALL-DEV) {
         flex-direction: column-reverse;
         align-items: center;
+        justify-content: flex-end;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        border-radius: 1rem;
+        background-color: whitesmoke;
+        padding: 2rem 1rem;
+
+        h1 {
+            color: $blue-darken-4;
+            font-size: 3rem;
+            margin-bottom: 2rem;
+        }
+        h2 {
+            color: $blue-darken-3;
+            font-size: 2rem;
+        }
     }
 
     .dropdown {
-        width: 30rem;
+        width: 100%;
+        position: relative;
 
         &__select {
-            z-index: 1;
             padding: 1.5rem;
             border-radius: 4px;
-            background-color: $white;
+            background-color: $green-lighten-2;
             display: flex;
             align-items: center;
             justify-content: space-between;
             font-size: 1.6rem;
+            font-weight: bolder;
+            color: $white;
             cursor: pointer;
         }
 
         &__list {
-            z-index: 0;
             position: absolute;
-            top: -11rem;
+            top: -12rem;
             left: 0;
             right: 0;
             border-radius: 4px;
-            background-color: $white;
+            background-color: $light-green-lighten-3;
             opacity: 0;
             visibility: hidden;
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: $grey-darken-1;
 
-            transition: all 0.3s;
+            transition: all 0.5s;
             &.show {
                 opacity: 1;
                 visibility: visible;
@@ -51,21 +74,16 @@
                 cursor: pointer;
 
                 &:hover {
-                    background-color: $grey-lighten-2;
+                    background-color: $green-lighten-3;
                 }
             }
         }
 
         .icon {
+            fill: $white;
             &.show {
                 transform: rotate(180deg);
             }
-        }
-
-        .dropdown-hidden {
-            position: relative;
-            overflow: hidden;
-            height: 100vh;
         }
     }
 
@@ -75,5 +93,13 @@
             width: 100%;
             height: auto;
         }
+    }
+
+    .hide-overflow{
+        position: absolute;
+        overflow: hidden;
+        height: 50rem;
+        width: 100%;
+        background-color: transparent;
     }
 }
