@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { CidadeService } from './shared/cidade.service';
+import { Notification } from './shared/notification.model';
+
 
 @Component({
   selector: 'app-root',
@@ -7,4 +10,16 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ticketlog';
+  notification = new Notification();
+
+  constructor(private cidadeService: CidadeService) {}
+
+  ngOnInit(): void {
+    this.cidadeService.savedCidade.subscribe((notification: Notification) => {
+      this.notification = notification;
+    });
+    this.cidadeService.deletedCidade.subscribe((notification: Notification) => {
+      this.notification = notification;            
+    });
+  }
 }

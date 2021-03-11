@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CidadeService } from '../shared/cidade.service';
 import { Dolar } from '../shared/dolar.model';
 import { DolarService } from '../shared/dolar.service';
 import { Estado } from '../shared/estado.model';
 import { EstadoService } from '../shared/estado.service';
+import { Notification } from '../shared/notification.model';
+
 
 @Component({
   selector: 'app-home',
@@ -12,7 +16,7 @@ import { EstadoService } from '../shared/estado.service';
 export class HomeComponent implements OnInit {
 
   isShowingItems = false
-  estadoUF: string | undefined = "SC"
+  estadoUF: string = "SC"
   urlImage: string | undefined
   selectedValue: string | undefined = "Selecione o Estado"
   selectedEstado: Estado | undefined
@@ -45,7 +49,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.getDolar()
-    this.selectEstado(this.estadoUF)
+    this.selectEstado(this.route.snapshot.params['uf'])
   }
 
   showItems() {
@@ -55,14 +59,15 @@ export class HomeComponent implements OnInit {
   selectEstado(uf: string | undefined) {
     this.loadingEstado = true
     let newEstadoSelected = undefined
-    newEstadoSelected = this.findEstadoByUF(uf)
+    newEstadoSelected = this.findEstadoByUF(uf || this.estadoUF)
 
-    if (newEstadoSelected && uf) {
+    if (newEstadoSelected) {
       this.isShowingItems = false
-      this.estadoUF = newEstadoSelected.uf
+      this.estadoUF = newEstadoSelected.uf || this.estadoUF
       this.urlImage = newEstadoSelected.urlImage
       this.selectedValue = newEstadoSelected.nome
-      this.setSelectedEstado(uf)
+      this.setSelectedEstado(this.estadoUF)
+      this.router.navigate([`${this.estadoUF.toLowerCase()}`])
     } else {
       this.loadingEstado = this.loadingEstado = false
     }
@@ -83,6 +88,9 @@ export class HomeComponent implements OnInit {
   constructor(
     private estadoService: EstadoService,
     private dolarService: DolarService,
+    private cidadeService: CidadeService,
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   private setSelectedEstado(uf: string) {
@@ -91,14 +99,14 @@ export class HomeComponent implements OnInit {
         this.selectedEstado = res as Estado
         this.selectedEstado.urlImage = this.urlImage
         console.log(this.selectedEstado);
-        
+
       })
   }
 
   private findEstadoByUF(uf: string | undefined): Estado | undefined {
     if (undefined)
       return undefined
-    return this.options.filter(estado => estado.uf === uf)[0]
+    return this.options.filter(estado => estado.uf!.toLocaleLowerCase() === uf!.toLocaleLowerCase())[0]
   }
 
   private getDolar() {
@@ -107,6 +115,19 @@ export class HomeComponent implements OnInit {
         this.dolar = res as Dolar
       })
       .catch(err => console.log(err))
+  }
+
+  private subscribeNotifications() {
+    this.cidadeService.savedCidade.subscribe((notification: Notification) => {
+      if (notification.type === "successfully") {
+        this.setSelectedEstado(this.estadoUF);
+      }
+    });
+    this.cidadeService.deletedCidade.subscribe((notification: Notification) => {
+      if (notification.type === "successfully")
+        this.setSelectedEstado(this.estadoUF);
+
+    });
   }
 
 }

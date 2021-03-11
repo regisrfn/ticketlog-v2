@@ -10,8 +10,10 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { DeleteWarningComponent } from './delete-warning/delete-warning.component';
-
-
+import { CidadesComponent } from './cidades/cidades.component';
+import { NotificationComponent } from './notification/notification.component';
+import { FormatCidadeNamePipe } from './pipes/format-cidade-name.pipe';
+import { LoaderComponent } from './loader/loader.component';
 
 registerLocaleData(ptBr)
 
@@ -20,7 +22,11 @@ registerLocaleData(ptBr)
     AppComponent,
     HeaderComponent,
     HomeComponent,
-    DeleteWarningComponent
+    DeleteWarningComponent,
+    CidadesComponent,
+    NotificationComponent,
+    FormatCidadeNamePipe,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,

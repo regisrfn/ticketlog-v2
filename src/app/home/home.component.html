@@ -1,6 +1,5 @@
-<div *ngIf="selectedEstado">
+<div class="container__home" *ngIf="selectedEstado">
     <div class="home">
-
         <div class="home__content">
             <h1>Estado: {{ selectedEstado.nome }}</h1>
             <h2>População: {{ selectedEstado.populacao | number:'1.0':'pt-BR'}}</h2>
@@ -27,8 +26,8 @@
         <div class=image-container>
             <img [src]="selectedEstado.urlImage">
         </div>
-
     </div>
+    <app-cidades [uf]="selectedEstado.uf || 'SC'"></app-cidades>
 </div>
 
 
