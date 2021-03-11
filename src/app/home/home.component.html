@@ -21,8 +21,11 @@
                 </div>
             </div>
 
-            <button class="btn btn--inserir">
+            <button class="btn">
                 <a (click)="openModalCidade=true">Inserir nova cidade</a>
+            </button>
+            <button class="btn">
+                <a (click)="openModalCidadeFile=true">Inserir por arquivo</a>
             </button>
         </div>
 
@@ -32,8 +35,14 @@
     </div>
 
     <app-cidades [uf]="selectedEstado.uf || 'SC'"></app-cidades>
-    <app-new-cidade-modal [isOpen]="openModalCidade" (closed)="openModalCidade=false" [data]="selectedEstado">
+    <app-new-cidade-modal [isOpen]="openModalCidade" 
+                          (closed)="openModalCidade=false" 
+                          [data]="selectedEstado">
     </app-new-cidade-modal>
+    <app-new-cidade-modal-file [isOpen]="openModalCidadeFile" 
+                               (closed)="openModalCidadeFile=false" 
+                               [data]="selectedEstado">
+    </app-new-cidade-modal-file>
 </div>
 
 

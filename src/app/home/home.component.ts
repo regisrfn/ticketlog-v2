@@ -23,6 +23,8 @@ export class HomeComponent implements OnInit {
   loadingEstado = false
   dolar: Dolar | undefined
   openModalCidade = false
+  openModalCidadeFile = false
+
 
   options: Estado[] = [
     {
@@ -123,6 +125,7 @@ export class HomeComponent implements OnInit {
     this.cidadeService.savedCidade.subscribe((notification: Notification) => {
       if (notification.type === "successfully") {
         this.openModalCidade = false
+        this.openModalCidadeFile = false
         this.setSelectedEstado(this.estadoUF);
       }
     });
