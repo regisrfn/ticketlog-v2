@@ -18,6 +18,11 @@
         opacity: 1;
     }
 
+    &.open {
+        visibility: visible;
+        opacity: 1;
+    }
+
     &__content {
         position: relative;
         flex-basis: 60%;

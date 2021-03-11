@@ -19,15 +19,21 @@
                         </div>
                     </div>
                 </div>
-
             </div>
+
+            <button class="btn btn--inserir">
+                <a (click)="openModalCidade=true">Inserir nova cidade</a>
+            </button>
         </div>
 
         <div class=image-container>
             <img [src]="selectedEstado.urlImage">
         </div>
     </div>
+
     <app-cidades [uf]="selectedEstado.uf || 'SC'"></app-cidades>
+    <app-new-cidade-modal [isOpen]="openModalCidade" (closed)="openModalCidade=false" [data]="selectedEstado">
+    </app-new-cidade-modal>
 </div>
 
 

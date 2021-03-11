@@ -22,6 +22,7 @@ export class HomeComponent implements OnInit {
   selectedEstado: Estado | undefined
   loadingEstado = false
   dolar: Dolar | undefined
+  openModalCidade = false
 
   options: Estado[] = [
     {
@@ -48,6 +49,7 @@ export class HomeComponent implements OnInit {
   ];
 
   ngOnInit(): void {
+    this.subscribeNotifications()
     this.getDolar()
     this.selectEstado(this.route.snapshot.params['uf'])
   }
@@ -120,6 +122,7 @@ export class HomeComponent implements OnInit {
   private subscribeNotifications() {
     this.cidadeService.savedCidade.subscribe((notification: Notification) => {
       if (notification.type === "successfully") {
+        this.openModalCidade = false
         this.setSelectedEstado(this.estadoUF);
       }
     });

@@ -14,6 +14,8 @@ import { CidadesComponent } from './cidades/cidades.component';
 import { NotificationComponent } from './notification/notification.component';
 import { FormatCidadeNamePipe } from './pipes/format-cidade-name.pipe';
 import { LoaderComponent } from './loader/loader.component';
+import { NewCidadeModalComponent } from './home/new-cidade-modal/new-cidade-modal.component';
+import { NewCidadeComponent } from './cidades/new-cidade/new-cidade.component';
 
 registerLocaleData(ptBr)
 
@@ -26,7 +28,9 @@ registerLocaleData(ptBr)
     CidadesComponent,
     NotificationComponent,
     FormatCidadeNamePipe,
-    LoaderComponent
+    LoaderComponent,
+    NewCidadeModalComponent,
+    NewCidadeComponent
   ],
   imports: [
     BrowserModule,

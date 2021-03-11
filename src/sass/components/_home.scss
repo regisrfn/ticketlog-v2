@@ -107,4 +107,26 @@
         width: 100%;
         visibility: collapse;
     }
+
+    .btn {
+        margin-top: 2rem;
+        width: 100%;
+        max-width: 40rem;
+        background-color: $green-darken-3;
+        padding: 0.5rem 1rem;
+
+        &:hover{
+            background-color: $green-darken-1;
+        }
+    }
+}
+
+.not_found{
+    padding: 2rem 1rem;
+    display: flex;
+    justify-content: center;
+
+    h1{
+        color: $blue-darken-4;
+    }
 }
