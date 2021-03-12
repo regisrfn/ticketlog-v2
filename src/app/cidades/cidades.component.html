@@ -7,7 +7,8 @@
     <table *ngIf="cidadesList.length !==0">
         <thead>
             <th (click)="setPageOrderBY('nome')" [ngClass]="{clicked:!ascending && !ascendingNome}">Nome</th>
-            <th (click)="setPageOrderBY('populacao')" [ngClass]="{clicked:!ascending && !ascendingPopulacao}">População</th>
+            <th (click)="setPageOrderBY('populacao')" [ngClass]="{clicked:!ascending && !ascendingPopulacao}">População
+            </th>
             <th>Custo</th>
             <th>
                 <div class="tbl-btn">
@@ -41,14 +42,14 @@
     </ng-container>
 
     <div class="nav-buttons" *ngIf="(cidadesPage.totalPages > 1)">
-        <a (click)="previousPage()" class="previous" *ngIf="cidadesPage.pageNumber > 0">
+        <a (click)="previousPage()" class="previous" [ngClass]="{enabled:cidadesPage.pageNumber > 0}">
             &laquo; Anterior
         </a>
         <a class="pageNo" [ngClass]="{selected:itemIndex===cidadesPage.pageNumber}"
             *ngFor="let item of arrayOne(cidadesPage.totalPages);index as itemIndex;" (click)="goToPage(itemIndex)">
             {{itemIndex+1}}
         </a>
-        <a (click)="nextPage()" class="next" *ngIf="cidadesPage.pageNumber < cidadesPage.totalPages-1">
+        <a (click)="nextPage()" class="next" [ngClass]="{enabled:cidadesPage.pageNumber < cidadesPage.totalPages-1}">
             Proxima &raquo;
         </a>
 

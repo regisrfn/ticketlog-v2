@@ -29,19 +29,21 @@
       &.previous {
         background-color: $grey-lighten-3;
         font-weight: bolder;
+        visibility: hidden;
       }
 
       &.next {
         background-color: $green;
         color: white;
         font-weight: bolder;
+        visibility: hidden;
       }
 
       &.pageNo {
         background-color: $grey-lighten-3;
         border: 1px solid $grey-lighten-1;
         border-right: 0;
-      }      
+      }
 
       &.selected {
         background-color: #ddd;
@@ -54,10 +56,14 @@
         color: $green;
       }
 
-      &:last-child {
+      &:nth-last-child(2) {
         &.pageNo {
-          border-right: 1px solid $grey-lighten-1;
+          border: 1px solid $grey-lighten-1;
         }
+      }
+
+      &.enabled {
+        visibility: visible;
       }
     }
   }
