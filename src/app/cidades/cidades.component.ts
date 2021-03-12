@@ -1,4 +1,5 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, SimpleChanges } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Cidade } from '../shared/cidade.model';
 import { CidadeService } from '../shared/cidade.service';
 import { Dolar } from '../shared/dolar.model';
@@ -10,7 +11,7 @@ import { Page } from '../shared/page.model';
   selector: 'app-cidades',
   templateUrl: './cidades.component.html',
 })
-export class CidadesComponent implements OnInit {
+export class CidadesComponent implements OnInit, OnDestroy {
   @Input() uf = "";
   dolarNow = new Dolar
   cidadesPage = new Page();
@@ -27,6 +28,10 @@ export class CidadesComponent implements OnInit {
   ascending = true;
   orderBy = "nome"
 
+  deleteSubscription: Subscription | undefined
+  saveSubscription: Subscription | undefined
+
+
   constructor(private cidadeService: CidadeService, private dolarService: DolarService) { }
 
   ngOnInit(): void {
@@ -39,6 +44,11 @@ export class CidadesComponent implements OnInit {
       this.reset()
       this.setCidadePage(this.uf, 0)
     }
+  }
+
+  ngOnDestroy() {
+    this.saveSubscription?.unsubscribe()
+    this.deleteSubscription?.unsubscribe()
   }
 
   nextPage() {
@@ -158,11 +168,11 @@ export class CidadesComponent implements OnInit {
   }
 
   private subscribeNotifications() {
-    this.cidadeService.savedCidade.subscribe((notification: Notification) => {
+    this.saveSubscription = this.cidadeService.savedCidade.subscribe((notification: Notification) => {
       if (notification.type === "successfully")
         this.setCidadePageOrderBy(this.uf, this.orderBy, this.ascending, this.cidadesPage.pageNumber)
     });
-    this.cidadeService.deletedCidade.subscribe((notification: Notification) => {
+    this.deleteSubscription = this.cidadeService.deletedCidade.subscribe((notification: Notification) => {
       if (notification.type === "successfully") {
         this.open = false;
         this.askDeleteGroup = false

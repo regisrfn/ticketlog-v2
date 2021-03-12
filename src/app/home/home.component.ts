@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { CidadeService } from '../shared/cidade.service';
 import { Dolar } from '../shared/dolar.model';
 import { DolarService } from '../shared/dolar.service';
@@ -13,7 +14,7 @@ import { Notification } from '../shared/notification.model';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
 
   isShowingItems = false
   estadoUF: string = "SC"
@@ -24,6 +25,9 @@ export class HomeComponent implements OnInit {
   dolar: Dolar | undefined
   openModalCidade = false
   openModalCidadeFile = false
+  deleteSubscription: Subscription | undefined
+  saveSubscription: Subscription | undefined
+
 
 
   options: Estado[] = [
@@ -54,6 +58,11 @@ export class HomeComponent implements OnInit {
     this.subscribeNotifications()
     this.getDolar()
     this.selectEstado(this.route.snapshot.params['uf'])
+  }
+
+  ngOnDestroy(){
+    this.saveSubscription?.unsubscribe()
+    this.deleteSubscription?.unsubscribe()
   }
 
   showItems() {
@@ -102,8 +111,6 @@ export class HomeComponent implements OnInit {
       .then(res => {
         this.selectedEstado = res as Estado
         this.selectedEstado.urlImage = this.urlImage
-        console.log(this.selectedEstado);
-
       })
   }
 
@@ -122,14 +129,14 @@ export class HomeComponent implements OnInit {
   }
 
   private subscribeNotifications() {
-    this.cidadeService.savedCidade.subscribe((notification: Notification) => {
+    this.saveSubscription = this.cidadeService.savedCidade.subscribe((notification: Notification) => {
       if (notification.type === "successfully") {
         this.openModalCidade = false
         this.openModalCidadeFile = false
         this.setSelectedEstado(this.estadoUF);
       }
     });
-    this.cidadeService.deletedCidade.subscribe((notification: Notification) => {
+    this.deleteSubscription = this.cidadeService.deletedCidade.subscribe((notification: Notification) => {
       if (notification.type === "successfully")
         this.setSelectedEstado(this.estadoUF);
 
