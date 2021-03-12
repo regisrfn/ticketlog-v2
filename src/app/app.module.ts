@@ -18,6 +18,7 @@ import { NewCidadeModalComponent } from './home/new-cidade-modal/new-cidade-moda
 import { NewCidadeComponent } from './cidades/new-cidade/new-cidade.component';
 import { NewCidadeFromFileComponent } from './cidades/new-cidade-from-file/new-cidade-from-file.component';
 import { NewCidadeModalFileComponent } from './home/new-cidade-modal-file/new-cidade-modal-file.component';
+import { SearchResultComponent } from './cidades/search-result/search-result.component';
 
 registerLocaleData(ptBr)
 
@@ -35,6 +36,7 @@ registerLocaleData(ptBr)
     NewCidadeComponent,
     NewCidadeFromFileComponent,
     NewCidadeModalFileComponent,
+    SearchResultComponent,
   ],
   imports: [
     BrowserModule,

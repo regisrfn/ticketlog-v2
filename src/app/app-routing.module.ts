@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { SearchResultComponent } from './cidades/search-result/search-result.component';
 import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
@@ -11,6 +12,7 @@ const routes: Routes = [
         path: ':uf',
         children: [
           { path: '', component: HomeComponent },
+          { path: 'search', component: SearchResultComponent }
         ]
       },
       { path: '**', redirectTo: "" },

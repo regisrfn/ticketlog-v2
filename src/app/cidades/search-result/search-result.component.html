@@ -1,0 +1,70 @@
+<div class="search-result">
+    <div *ngIf="foundListOfCidades.length===0">
+        <h1 class="title"> Nenhuma cidade encontrada</h1>
+    </div>
+    <div class="voltar-link">
+        <a [routerLink]="'..'"> &larr; retorna </a>
+    </div>
+    <div *ngIf="foundListOfCidades.length > 0">
+        <h1 class="title">
+            Resultados para : "{{cidadeNameToSearch}}"
+        </h1>
+        <hr>
+        <table>
+            <thead>
+                <th>Nome</th>
+                <th>População</th>
+                <th>Custo</th>
+                <th>Estado</th>
+                <th>
+                    <div class="tbl-btn">
+                        <button class="btn btn-edit" (click)="editMode=!editMode">
+                            <span class="icon" [inlineSVG]="'assets/svg/edit.svg'"></span>
+                            Selecionar
+                        </button>
+                    </div>
+                </th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let cidade of foundListOfCidades;index as itemIndex; trackBy:trackByFn">
+                    <td>{{cidade.nome | formatCidadeName}}</td>
+                    <td>{{cidade.populacao | number:'1.0':'pt-BR'}}</td>
+                    <td>{{dolar2Real(cidade) | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}</td>
+                    <td>{{cidade.uf?.toUpperCase()}}</td>
+                    <td>
+                        <div class="tbl-btn">
+                            <button *ngIf="!editMode" class="btn btn-del" (click)="selectCidade(cidade)">
+                                <span class="icon" [inlineSVG]="'assets/svg/delete.svg'"></span>
+                            </button>
+                            <input *ngIf="editMode" (change)="selectCidades()" type="checkbox"
+                                [(ngModel)]="cidade.isChecked">
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="btn-container">
+            <button class="btn btn-del" *ngIf="editMode" (click)="askDeleteGroup=true"
+                [disabled]="selectedCidades.length === 0">
+                Excluir cidades selecionadas
+            </button>
+        </div>
+    </div>
+    <app-delete-warning (confirm)="deleteCidade($event)" [isClosed]="!open">
+        Remover cidade: {{selectedCidades[0]?.nome | formatCidadeName}}
+    </app-delete-warning>
+
+    <app-delete-warning (confirm)="deleteCidadeList($event)" [isClosed]="!askDeleteGroup">
+        Cidades selecionadas: {{selectedCidades.length}}
+    </app-delete-warning>
+
+    <app-loader *ngIf="isSearching">
+        <h1>Carregando</h1>
+    </app-loader>
+
+    <app-loader *ngIf="isDeleting">
+        <h1>Removendo cidade</h1>
+    </app-loader>
+
+
+</div>
