@@ -19,7 +19,6 @@ export class SearchResultComponent implements OnInit, OnDestroy {
   query: string | undefined
   param: string | undefined
 
-  selectedCidade: Cidade | undefined
   selectedCidades: Cidade[] = []
   editMode = false;
   askDeleteGroup = false
@@ -64,7 +63,6 @@ export class SearchResultComponent implements OnInit, OnDestroy {
   selectCidade(cidade: Cidade) {
     cidade.isChecked = true
     this.open = true;
-    this.selectedCidade = cidade
     this.selectedCidades.push(cidade)
   }
 
@@ -89,8 +87,7 @@ export class SearchResultComponent implements OnInit, OnDestroy {
     else {
       this.isDeleting = false
       this.open = false;
-      this.selectedCidade!.isChecked = false
-      this.selectedCidade = undefined
+      this.unselectCidades()
       this.selectedCidades = []
     }
   }
@@ -155,4 +152,7 @@ export class SearchResultComponent implements OnInit, OnDestroy {
     });
   }
 
+  private unselectCidades() {
+    this.selectedCidades.forEach(cidade => cidade.isChecked = false)
+  }
 }
