@@ -63,7 +63,7 @@
     </div>
 
     <app-delete-warning (confirm)="deleteCidade($event)" [isClosed]="!open">
-        Remover cidade: {{selectedCidade?.nome | formatCidadeName}}
+        Remover cidade: {{selectedCidades[0]?.nome | formatCidadeName}}
     </app-delete-warning>
 
     <app-delete-warning (confirm)="deleteCidadeList($event)" [isClosed]="!askDeleteGroup">

@@ -17,7 +17,6 @@ export class CidadesComponent implements OnInit, OnDestroy {
   cidadesPage = new Page();
   cidadesList: Cidade[] = [];
   open = false
-  selectedCidade: Cidade | undefined
   selectedCidades: Cidade[] = []
   editMode = false;
   askDeleteGroup = false
@@ -53,19 +52,16 @@ export class CidadesComponent implements OnInit, OnDestroy {
 
   nextPage() {
     this.selectedCidades = []
-    this.selectedCidade = new Cidade
     this.setCidadePageOrderBy(this.uf, this.orderBy, this.ascending, this.cidadesPage.pageNumber + 1);
   }
 
   previousPage() {
     this.selectedCidades = []
-    this.selectedCidade = new Cidade
     this.setCidadePageOrderBy(this.uf, this.orderBy, this.ascending, this.cidadesPage.pageNumber - 1);
   }
 
   goToPage(pageNo: number) {
     this.selectedCidades = []
-    this.selectedCidade = new Cidade
     this.setCidadePageOrderBy(this.uf, this.orderBy, this.ascending, pageNo);
   }
 
@@ -74,8 +70,9 @@ export class CidadesComponent implements OnInit, OnDestroy {
   }
 
   selectCidade(cidade: Cidade) {
+    cidade.isChecked = true
     this.open = true;
-    this.selectedCidade = cidade
+    this.selectedCidades.push(cidade)
   }
 
   selectCidades() {
@@ -86,7 +83,7 @@ export class CidadesComponent implements OnInit, OnDestroy {
     this.setDeleteEvenMessage();
     if (event.isConfirmed) {
       this.isDeleting = true
-      this.cidadeService.deleteCidade(this.selectedCidade?.id || "")
+      this.cidadeService.deleteCidadesList(this.selectedCidades)
         .then(res => {
           this.setDeleteEvenMessage(true, 'Cidade removida', 'successfully')
           this.isDeleting = false
@@ -99,7 +96,8 @@ export class CidadesComponent implements OnInit, OnDestroy {
     else {
       this.isDeleting = false
       this.open = false;
-      this.selectedCidade = undefined
+      this.unselectCidades()
+      this.selectedCidades = []
     }
   }
 
@@ -177,14 +175,19 @@ export class CidadesComponent implements OnInit, OnDestroy {
         this.open = false;
         this.askDeleteGroup = false
         this.editMode = false
+        this.verifyPageAfterDelete()
         this.setCidadePageOrderBy(this.uf, this.orderBy, this.ascending, this.cidadesPage.pageNumber)
       }
     });
   }
+  private verifyPageAfterDelete() {
+    if (this.cidadesPage.pageNumber > 0) {
+      this.cidadesPage.pageNumber = this.selectedCidades.length === this.cidadesList.length ? this.cidadesPage.pageNumber - 1 : this.cidadesPage.pageNumber
+    }
+  }
 
   private reset() {
     this.selectedCidades = []
-    this.selectedCidade = new Cidade
     this.editMode = false;
     this.askDeleteGroup = false
     this.ascendingPopulacao = true
@@ -212,6 +215,10 @@ export class CidadesComponent implements OnInit, OnDestroy {
       .catch(err => {
         console.log(err);
       });
+  }
+
+  private unselectCidades() {
+    this.selectedCidades.forEach(cidade => cidade.isChecked = false)
   }
 
 }
